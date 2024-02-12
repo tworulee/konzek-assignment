@@ -1,10 +1,15 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
 
-function CardMain({ country }) {
-  const [isRandomColor, setIsRandomColor] = useState(false);
+function CardMain({ country, id }) {
   const [backgroundColor, setBackgroundColor] = useState("white");
+
+  useEffect(() => {
+    const storedColor = localStorage.getItem(`cardColor-${id}`);
+    if (storedColor) {
+      setBackgroundColor(storedColor);
+    }
+  }, [id]);
 
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
@@ -16,30 +21,26 @@ function CardMain({ country }) {
   };
 
   const toggleBackgroundColor = () => {
-   
-    if (!isRandomColor) {
-      const randomColor = getRandomColor();
-      setBackgroundColor(randomColor);
+    if (backgroundColor === "white") {
+      const newColor = getRandomColor();
+      setBackgroundColor(newColor);
+
+      localStorage.setItem(`cardColor-${id}`, newColor);
     } else {
       setBackgroundColor("white");
-    }
-    setIsRandomColor(!isRandomColor);
 
-    
+      localStorage.setItem(`cardColor-${id}`, "white");
+    }
   };
 
   return (
-    <Card style={{ width: "18rem", backgroundColor }}>
+    <Card
+      style={{ width: "18rem", backgroundColor }}
+      id={`custom-switch-${id}`}
+      onClick={toggleBackgroundColor}
+    >
       <Card.Body className="d-flex">
         <Card.Title className="mr-3">{country.name}</Card.Title>
-
-        <Form className="ms-3">
-          <Form.Check
-            type="switch"
-            id="custom-switch"
-            onClick={toggleBackgroundColor}
-          />
-        </Form>
       </Card.Body>
     </Card>
   );

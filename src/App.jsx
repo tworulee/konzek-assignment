@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
 import CardMain from "./components/CardMain";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { CardGroup, Container, Navbar, Pagination } from "react-bootstrap";
@@ -73,7 +72,7 @@ function App() {
         <Row className="justify-content-center m-4">
           {currentCountries.map((country) => (
             <Col key={country.code} className="col-sm-6 col-md-6 col-lg-4 mb-3">
-              <CardMain value={country.code} country={country} />
+              <CardMain value={country.code} country={country} id={country.code} />
             </Col>
           ))}
         </Row>
@@ -91,8 +90,7 @@ function App() {
               return (
                 <Pagination.Item
                   key={index + 1}
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     paginate(index + 1);
                   }}
                   active={index + 1 === currentPage}
