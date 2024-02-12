@@ -40,6 +40,11 @@ function App() {
     country.name.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  const handleFilterTextChange = (e) => {
+    setFilterText(e.target.value); 
+    setCurrentPage(1);
+  };
+
   // Pagination
   const indexOfLastCountry = currentPage * countriesPerPage;
   const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
@@ -61,7 +66,7 @@ function App() {
                 placeholder="Search"
                 className="mr-sm-2"
                 value={filterText}
-                onChange={(e) => setFilterText(e.target.value)} // Update filter text
+                onChange={handleFilterTextChange} // Update filter text
               />
             </Col>
           </Row>
@@ -72,7 +77,11 @@ function App() {
         <Row className="justify-content-center m-4">
           {currentCountries.map((country) => (
             <Col key={country.code} className="col-sm-6 col-md-6 col-lg-4 mb-3">
-              <CardMain value={country.code} country={country} id={country.code} />
+              <CardMain
+                value={country.code}
+                country={country}
+                id={country.code}
+              />
             </Col>
           ))}
         </Row>
