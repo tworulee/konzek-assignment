@@ -41,7 +41,7 @@ function App() {
   );
 
   const handleFilterTextChange = (e) => {
-    setFilterText(e.target.value); 
+    setFilterText(e.target.value);
     setCurrentPage(1);
   };
 
@@ -75,15 +75,24 @@ function App() {
 
       <CardGroup className="bg-body-tertiary justify-content-center">
         <Row className="justify-content-center m-4">
-          {currentCountries.map((country) => (
-            <Col key={country.code} className="col-sm-6 col-md-6 col-lg-4 mb-3">
-              <CardMain
-                value={country.code}
-                country={country}
-                id={country.code}
-              />
+          {currentCountries.length > 0 ? (
+            currentCountries.map((country) => (
+              <Col
+                key={country.code}
+                className="col-sm-6 col-md-6 col-lg-4 mb-3"
+              >
+                <CardMain
+                  value={country.code}
+                  country={country}
+                  id={country.code}
+                />
+              </Col>
+            ))
+          ) : (
+            <Col className="col-sm-12 text-center">
+              <p>There is no country</p>
             </Col>
-          ))}
+          )}
         </Row>
       </CardGroup>
 
